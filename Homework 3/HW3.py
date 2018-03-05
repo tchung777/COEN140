@@ -46,7 +46,8 @@ class HW3():
         predict = dot(X_i,transpose(W))
         RSME = self.costFunction(Y_i, predict, 399)
 
-        print("Linear Regression RSME: {}".format(RSME))
+        print("Linear Regression RSME (Training): {}".format(self.costFunction(Y, None, 1595, W, X)))
+        print("Linear Regression RSME (Test): {}".format(RSME))
 
     def linearRegressionGradientDescent(self):
         """
@@ -66,9 +67,9 @@ class HW3():
         X_i = self.testData[:, 1:]
 
         grad = None
-        theta = random.normal(0,1,96)
-        alpha = 0.01
-        eps = float('1e-7')
+        theta = ones(96) #random.normal(0,1,96)
+        alpha = 0.001
+        eps = float('1e-5')
 
         previousLoss = self.costFunction(Y, None, 1595, theta, X)
         loss = None
@@ -87,7 +88,9 @@ class HW3():
             theta = grad # Update our weight vector
             previousLoss = loss # Set previousLoss to currentLoss so we don't have to recalculate this.
 
-        print("Linear Regression Gradient Descent RSME: {}".format(self.costFunction(Y_i, None, 399, grad, X_i)))
+        print(theta)
+        print("Linear Regression Gradient Descent RSME (Training): {}".format(self.costFunction(Y, None, 1595, grad, X)))
+        print("Linear Regression Gradient Descent RSME (Test): {}".format(self.costFunction(Y_i, None, 399, grad, X_i)))
 
     def ridgeRegressionGradientDescent(self):
         """
@@ -109,8 +112,8 @@ class HW3():
 
         grad = None
         theta = random.normal(0,1,96)
-        alpha = 0.01
-        eps = float('1e-7')
+        alpha = 0.001
+        eps = float('1e-5')
 
         previousLoss = self.costFunction(Y, None, 1595, theta, X)
         loss = None
@@ -128,7 +131,8 @@ class HW3():
             theta = grad  # Update our weight vector
             previousLoss = loss  # Set previousLoss to currentLoss so we don't have to recalculate this.
 
-        print("Ridge Regression Gradient Descent RSME: {}".format(self.costFunction(Y_i, None, 399, grad, X_i)))
+        print("Ridge Regression Gradient Descent RSME (Training): {}".format(self.costFunction(Y, None, 1595, grad, X)))
+        print("Ridge Regression Gradient Descent RSME (Test): {}".format(self.costFunction(Y_i, None, 399, grad, X_i)))
 
     def costFunction(self, Y_i, predict, n, W = None, X_i = None):
         """
@@ -175,7 +179,8 @@ class HW3():
         predict = dot(X_i, transpose(W))
         RSME = self.costFunction(Y_i, predict, 399)
 
-        print("Ridge Regression RSME: {}".format(RSME))
+        print("Ridge Regression RSME (Training): {}".format(self.costFunction(Y, None, 1595, W, X)))
+        print("Ridge Regression RSME (Test): {}".format(RSME))
 
     def ridgeRegressionBase(self, X, Y, regTerm, test):
         W = dot(dot(linalg.inv(dot(transpose(X),X) + regTerm*identity(96)),transpose(X)),Y)
